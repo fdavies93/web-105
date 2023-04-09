@@ -1,5 +1,7 @@
 FROM python:3.10-bullseye
 COPY requirements.txt requirements.txt
+COPY static /static
+COPY templates /templates
 ADD app.py /
 RUN pip3 install -r requirements.txt
 EXPOSE 5000:5000
