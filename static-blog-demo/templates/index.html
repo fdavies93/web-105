@@ -1,0 +1,17 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+<script src="{{ url_for('static',filename='scripts/common.js') }}"> </script>
+<html>
+    <body>
+        <div class="outer_wrapper">
+            <div id="wrapper" class="inner_wrapper">
+                <p> Host: {{ hostname }} </p>
+                {% for post in posts %}
+                    <h1> <a href="{{ hostname }}/{{ post['id'] }}"> {{ post["title"] }}</a></h1>
+                    <p> {{ post["content"] }}</p>
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

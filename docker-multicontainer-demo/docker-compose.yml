@@ -1,0 +1,37 @@
+services:
+  demo-writer:
+    hostname: writer
+    build: ./writer
+    networks:
+      - default
+    volumes:
+      - demo:/data 
+    environment:
+      - DATA_PATH=/data/log.txt
+    tty: true
+    stdin_open: true
+  demo-reader:
+    hostname: reader
+    build: ./reader
+    volumes:
+      - demo:/data
+    networks:
+      - default
+    environment:
+      - DATA_PATH=/data/log.txt
+      - WRITER_ENDPOINT=http://writer:5000/
+    tty: true
+    stdin_open: true
+  demo-frontend:
+    hostname: frontend
+    build: ./frontend
+    networks:
+      - default
+    environment:
+      - WRITER_ENDPOINT=http://writer:5000/
+    ports:
+      - "5000:5000"
+    tty: true
+    stdin_open: true
+volumes:
+  demo: {}

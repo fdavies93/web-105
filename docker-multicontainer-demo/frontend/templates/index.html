@@ -1,0 +1,28 @@
+<!doctype html>
+<title>Multi-Container Demo</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script>
+
+    window.onload = () => {
+        function submitText(button){
+            let title = document.getElementById("title").value;
+            let text = document.getElementById("text").value;
+            let url = "{{endpoint}}";//some flask insert
+            fetch(url + "/submit", {method : 'POST', mode : 'cors', cache : 'no-cache', headers: {'Content-Type': 'application/json'}, body: JSON.stringify( {"title": title, "text": text} )})
+            .then( (response) => response.json() )
+            .then( (json) => {
+                let div = document.getElementById("json");
+                div.innerText = JSON.stringify(json);
+            } )
+        }
+
+        let button = document.getElementById("submit-button")
+        button.onclick = submitText
+    }
+</script>
+<body>
+    <label for="title">Title: </label><input id="title" type="text"> <br />
+    <label for="text">Text: </label><input id="text" type="text"> <br />
+    <input id="submit-button" type="button" onclick="submitText()" value="Submit"> <br />
+    <div id="json"></div>
+</body>

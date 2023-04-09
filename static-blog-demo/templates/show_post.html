@@ -1,0 +1,22 @@
+<!doctype html>
+<link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+<script src="{{ url_for('static',filename='scripts/common.js') }}"> </script>
+<script>
+    window.onload = () => {
+        fetch_json("{{ hostname }}/getinfo",{"post_num": {{ post["id"] }} }, "POST").then( res => res.json() ).then( (info) => {
+            console.log(info)
+        })
+    }
+</script>
+<html>
+    <body>
+        <div class="outer_wrapper">
+            <div id="wrapper" class="inner_wrapper">
+                <p> {{ hostname }} </p>
+                <h1> {{ post["title"] }} </h1>
+                <p> {{ post["content"] }}</p>
+                <p> <a href="{{ hostname }}">[ Return to index ]</a></p>
+            </div>
+        </div>
+    </body>
+</html>
