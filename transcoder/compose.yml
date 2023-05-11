@@ -1,0 +1,31 @@
+services:
+  transcode-api:
+    hostname: api
+    build: 
+      context: ./api
+      network: host
+    networks:
+      - default
+    volumes:
+      - transcode:/files 
+    environment:
+      - FILE_PATH=/files
+    tty: true
+    stdin_open: true
+    ports:
+      - 5000:5000
+  transcode-watcher:
+    hostname: watcher
+    build: 
+      context: ./watcher
+      network: host
+    volumes:
+      - transcode:/files
+    networks:
+      - default
+    environment:
+      - FILE_PATH=/files
+    tty: true
+    stdin_open: true
+volumes:
+  transcode: {}
