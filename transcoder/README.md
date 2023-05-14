@@ -4,6 +4,8 @@ This is a basic Flask file server which forms part of a transcoder service Kuber
 
 ## Building
 
+Note that `watcher` uses a bespoke image including `python3` and `ffmpeg` packages in order to successfully trigger transcodes. Linux distro may be subject to change.
+
 Need to use the `--network=host` option to successfully get the package repositories on the watcher folder.
 
 `docker build --no-cache --network=host . -t transcode-watcher`

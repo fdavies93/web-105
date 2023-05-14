@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: transcode-api
+        imagePullPolicy: Never
+        volumeMounts:
+        - mountPath: /files
+          name: file-mount
+        env:
+        - name: FILE_PATH
+          value: /files
+        ports:
+        - containerPort: 5000
+      volumes:
+      - name: file-mount
+        hostPath:
+          path: /data/transcode
+          type: DirectoryOrCreate

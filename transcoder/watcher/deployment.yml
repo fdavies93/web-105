@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watcher
+  labels:
+    app: watcher
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: watcher
+  template:
+    metadata:
+      labels:
+        app: watcher
+    spec:
+      containers:
+      - name: watcher
+        image: transcode-watcher
+        imagePullPolicy: Never
+        volumeMounts:
+        - mountPath: /files
+          name: file-mount
+        env:
+        - name: FILE_PATH
+          value: /files
+        resources:
+          limits:
+            cpu: 1.0
+            memory: 1G
+      volumes:
+      - name: file-mount
+        hostPath:
+          path: /data/transcode
+          type: DirectoryOrCreate
